@@ -26,8 +26,8 @@ sudo usermod -aG docker $USER
 
 # DotFiles
 
-sudo cp -iu ./dotfiles/.gitconfig $HOME/.gitconfig
-sudo cp -iu ./dotfiles/.zshrc $HOME/.zshrc
+sudo cp -iu ../dotfiles/.gitconfig $HOME/.gitconfig
+sudo cp -iu ../dotfiles/.zshrc $HOME/.zshrc
 
 # ZSH
 
@@ -44,6 +44,15 @@ echo 'source ~/.powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 sudo sh -c "echo 'vm.vfs_cache_pressure=50' >> /etc/sysctl.conf"
 sudo sh -c "echo 'vm.dirty_background_ratio = 5' >> /etc/sysctl.conf"
 sudo sh -c "echo 'vm.swappiness=10' >> /etc/sysctl.conf"
+
+# Disable coredump
+echo "* hard core 0" >> /mnt/etc/security/limits.conf
+
+# Security kernel settings.
+curl https://raw.githubusercontent.com/Whonix/security-misc/master/etc/sysctl.d/30_security-misc.conf >> /mnt/etc/sysctl.d/30_security-misc.conf
+sed -i 's/kernel.yama.ptrace_scope=2/kernel.yama.ptrace_scope=3/g' /mnt/etc/sysctl.d/30_security-misc.conf
+curl https://raw.githubusercontent.com/Whonix/security-misc/master/etc/sysctl.d/30_silent-kernel-printk.conf >> /mnt/etc/sysctl.d/30_silent-kernel-printk.conf
+
 
 # ASDF and Node
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.12.0
