@@ -12,11 +12,12 @@ sudo fwupdmgr get-updates
 sudo fwupdmgr update -y
 
 # Packages
+
 sudo apt install -y git htop exa bat traceroute tree whois dnsutils net-tools apt-transport-https neofetch bash-completion curl wget default-jre default-jdk vagrant gimp thunderbird code flatpak vlc virt-manager vim neovim deja-dup fonts-jetbrains-mono gnome-shell-extension-manager gparted unzip p7zip p7zip-full transmission pip cargo
 
 # Flatpak
-flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install -y com.spotify.Client md.obsidian.Obsidian org.cryptomator.Cryptomator
 
 # Docker
@@ -41,20 +42,23 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.powerlevel10
 echo 'source ~/.powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 
 # SYSCTL - SSD/NVME and RAM config
+
 sudo sh -c "echo 'vm.vfs_cache_pressure=50' >> /etc/sysctl.conf"
 sudo sh -c "echo 'vm.dirty_background_ratio = 5' >> /etc/sysctl.conf"
 sudo sh -c "echo 'vm.swappiness=10' >> /etc/sysctl.conf"
 
 # Disable coredump
-echo "* hard core 0" >> /mnt/etc/security/limits.conf
+
+sudo sh -c "echo '* hard core 0' >> /mnt/etc/security/limits.conf"
 
 # Security kernel settings.
-curl https://raw.githubusercontent.com/Whonix/security-misc/master/etc/sysctl.d/30_security-misc.conf >> /mnt/etc/sysctl.d/30_security-misc.conf
-sed -i 's/kernel.yama.ptrace_scope=2/kernel.yama.ptrace_scope=3/g' /mnt/etc/sysctl.d/30_security-misc.conf
-curl https://raw.githubusercontent.com/Whonix/security-misc/master/etc/sysctl.d/30_silent-kernel-printk.conf >> /mnt/etc/sysctl.d/30_silent-kernel-printk.conf
 
+sudo sh -c "curl https://raw.githubusercontent.com/Whonix/security-misc/master/etc/sysctl.d/30_security-misc.conf >> /mnt/etc/sysctl.d/30_security-misc.conf"
+sudo sh -c "sed -i 's/kernel.yama.ptrace_scope=2/kernel.yama.ptrace_scope=3/g' /mnt/etc/sysctl.d/30_security-misc.conf"
+sudo sh -c "curl https://raw.githubusercontent.com/Whonix/security-misc/master/etc/sysctl.d/30_silent-kernel-printk.conf >> /mnt/etc/sysctl.d/30_silent-kernel-printk.conf"
 
 # ASDF and Node
+
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.12.0
 
 ## After all reboot!
