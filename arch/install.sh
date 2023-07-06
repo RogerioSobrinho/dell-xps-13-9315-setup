@@ -77,19 +77,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel linux intel-ucode \
-         linux-firmware linux-headers lvm2 \
-         inetutils sudo networkmanager networkmanager-openvpn \ 
-         apparmor git python-psutil python-notify2 vim gdm \
-         power-profiles-daemon gnome-control-center gedit gnome-terminal \
-         gnome-tweak-tool gnome-backgrounds \
-         xdg-user-dirs gnome-calendar eog sushi gnome-boxes \
-         evince gnome-calculator gnome-system-monitor gnome-themes-extra \ 
-         gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator \ 
-         reflector mlocate man-db chrony bluez bluez-utils openvpn \ 
-         cups zsh curl wget zsh-autosuggestions \ 
-         zsh-syntax-highlighting fzf traceroute tree neofetch \
-         virt-manager neovim htop exa bat unzip p7zip ntfs-3g \
+pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo networkmanager networkmanager-openvpn apparmor git python-psutil python-notify2 vim gdm power-profiles-daemon gnome-control-center gedit gnome-terminal gnome-backgrounds xdg-user-dirs gnome-calendar eog sushi gnome-boxes evince gnome-calculator gnome-system-monitor gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator reflector mlocate man-db chrony bluez bluez-utils openvpn
 
 # Generating /etc/fstab.
 
