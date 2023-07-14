@@ -211,8 +211,8 @@ arch-chroot /mnt /bin/bash -e <<-EOF
     # Configuring /etc/mkinitcpio.conf
     echo "Configuring /etc/mkinitcpio for LUKS hook."
     sed -i 's,MODULES=(),MODULES=(ext4),g' /etc/mkinitcpio.conf
-    sed -i 's,modconf block filesystems keyboard,keyboard modconf block encrypt lvm2 resume filesystems,g' /etc/mkinitcpio.conf
-
+    sed -i 's,block,block encrypt lvm2 resume ,g' /etc/mkinitcpio.conf
+    
     # Generating a new initramfs.
     echo "Creating a new initramfs."
     chmod 600 /boot/initramfs-linux* &>/dev/null
