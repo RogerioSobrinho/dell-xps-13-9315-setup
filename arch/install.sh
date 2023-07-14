@@ -77,7 +77,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo networkmanager networkmanager-openvpn apparmor git python-psutil python-notify2 vim gdm power-profiles-daemon gnome-control-center gedit gnome-terminal gnome-backgrounds xdg-user-dirs gnome-calendar eog sushi gnome-boxes evince gnome-calculator gnome-system-monitor gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator reflector mlocate man-db chrony bluez bluez-utils openvpn
+pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo networkmanager networkmanager-openvpn apparmor git python-psutil python-notify2 vim gdm power-profiles-daemon gnome-control-center gedit gnome-terminal gnome-backgrounds xdg-user-dirs-gtk eog sushi evince gnome-calculator gnome-system-monitor gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator reflector mlocate man-db chrony bluez bluez-utils openvpn
 
 # Generating /etc/fstab.
 
@@ -100,7 +100,7 @@ EOF
 
 # Setting username.
 
-username=rogerio
+username=sobrinho
 
 # Setting up locales.
 
@@ -223,8 +223,8 @@ arch-chroot /mnt /bin/bash -e <<-EOF
     bootctl install --path=/boot &>/dev/null
 
     # Xorg as rootless
-    echo "Xorg as rootless"
-    echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config
+    # echo "Xorg as rootless"
+    # echo 'needs_root_rights = no' >> /etc/X11/Xwrapper.config
 
     # Adding user with sudo privilege
     if [ -n "$username" ]; then
