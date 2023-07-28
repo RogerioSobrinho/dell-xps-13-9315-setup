@@ -1,6 +1,6 @@
 [user]
   name = Rogerio
-  email = github@rogeriosobrinho.me
+  email = contato@sobrmail.com
 
 [core]
   excludesfile = ~/.gitignore
@@ -14,6 +14,9 @@
   c = !git add --all && git commit -m
   s = !git status -s
   l = !git log --pretty=format:'%C(blue)%h%C(red)%d %C(white)%s - %C(cyan)%cn, %C(green)%cr'
+  ignore = update-index --assume-unchanged
+  unignore = update-index --no-assume-unchanged
+  ignored = !git ls-files -v | grep "^[[:lower]]"
 
 [color]
   ui = always

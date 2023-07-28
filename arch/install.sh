@@ -85,7 +85,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo networkmanager apparmor git python-psutil python-notify2 vim gdm power-profiles-daemon gnome-control-center gnome-terminal gnome-software xdg-user-dirs-gtk eog sushi evince gnome-calculator gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak firewalld zram-generator adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts noto-fonts ttf-dejavu ttf-liberation reflector mlocate man-db chrony bluez bluez-utils fprintd sof-firmware ccid opensc pcsc-tools cups-pdf cups 
+pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo networkmanager apparmor git python-psutil python-notify2 vim gdm power-profiles-daemon gnome-control-center gnome-terminal gnome-software xdg-user-dirs-gtk eog sushi evince gnome-calculator gnome-themes-extra gnome-keyring gnome-tweaks nautilus flatpak ufw gufw zram-generator ttf-font-awesome ttf-meslo-nerd adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts noto-fonts ttf-dejavu ttf-liberation reflector mlocate man-db chrony bluez bluez-utils fprintd sof-firmware ccid opensc fwupd ccid opensc pcsc-tools cups-pdf cups plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
 
 # Generating /etc/fstab.
 
@@ -119,7 +119,7 @@ echo "KEYMAP=us-acentos" > /mnt/etc/vconsole.conf
 
 echo "Configuring /etc/mkinitcpio for ZSTD compression and LUKS hook."
 sed -i 's,MODULES=(),MODULES=(ext4),g' /mnt/etc/mkinitcpio.conf
-sed -i 's,block,block encrypt lvm2 resume ,g' /mnt/etc/mkinitcpio.conf
+sed -i 's,block,plymouth block encrypt lvm2 resume ,g' /mnt/etc/mkinitcpio.conf
 
 # Enabling NTS
 
@@ -265,13 +265,6 @@ arch-chroot /mnt chown -R $username:$username /home/${username}/.config
 
 # Setting ZSH
 
-# Add MesloGS Fonts
-
-cd /mnt/home/$username/.local/share/fonts/ && { curl -O https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf ; cd -; }
-cd /mnt/home/$username/.local/share/fonts/ && { curl -O https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf ; cd -; }
-cd /mnt/home/$username/.local/share/fonts/ && { curl -O https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf ; cd -; }
-cd /mnt/home/$username/.local/share/fonts/ && { curl -O https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf ; cd -; }
-
 # Add Powerlevel10k
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /mnt/home/${username}/.powerlevel10k
@@ -318,14 +311,18 @@ systemctl enable gdm --root=/mnt &>/dev/null
 echo "Enabling AppArmor."
 systemctl enable apparmor --root=/mnt &>/dev/null
 
-# Enabling Firewalld.
+# Enabling ufw.
 
-echo "Enabling Firewalld."
-systemctl enable firewalld --root=/mnt &>/dev/null
+echo "Enabling ufw."
+systemctl enable ufw.service --root=/mnt &>/dev/null
 
 # Enabling pcscd
 
 systemctl enable pcscd.service --root=/mnt &>/dev/null
+
+# Enabling paccache
+
+systemctl enable paccache.timer --root=/mnt &>/dev/null
 
 # Enabling Bluetooth Service (This is only to fix the visual glitch with gnome where it gets stuck in the menu at the top right).
 # IF YOU WANT TO USE BLUETOOTH, YOU MUST REMOVE IT FROM THE LIST OF BLACKLISTED KERNEL MODULES IN /mnt/etc/modprobe.d/30_security-misc.conf
@@ -336,6 +333,11 @@ systemctl enable bluetooth --root=/mnt &>/dev/null
 
 echo "Enabling Reflector."
 systemctl enable reflector.timer --root=/mnt &>/dev/null
+
+# Enabling libvirt
+
+systemctl enable libvirtd.service --root=/mnt &>/dev/null
+systemctl enable virtlogd.service --root=/mnt &>/dev/null
 
 # Enabling systemd-oomd.
 

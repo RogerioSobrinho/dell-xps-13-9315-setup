@@ -42,7 +42,6 @@ PS1+='$resetColor$ ';
 
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 export LS_OPTIONS='--color=auto'
 eval "`dircolors`"
@@ -79,7 +78,6 @@ alias ps='grc ps'
 alias netstat='grc netstat'
 alias dig='grc dig'
 alias traceroute='grc traceroute'
-alias apt='sudo apt'
 alias l='ls -lh'
 alias la='ls -lha'
 
