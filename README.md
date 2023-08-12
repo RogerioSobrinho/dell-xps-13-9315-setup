@@ -2,7 +2,7 @@
 
 ![Screenshot](./20230811_10h10m27s_grim.png?raw=true "Hyprland")
 
-Welcome to the Arch Linux Installation and Hyprland/Sway Dotfiles repository! This repository provides a convenient way to automate the installation of Arch Linux and set up a customized Hyprland (or Sway) desktop environment using pre-configured dotfiles.
+Welcome to the Arch Linux Installation and Hyprland/Sway Dotfiles repository! This repository provides a convenient way to automate the installation of Arch Linux and set up a customized Hyprland (or Sway) window manager (WM) using pre-configured dotfiles.
 
 ## Features
 
