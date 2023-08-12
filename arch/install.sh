@@ -63,7 +63,7 @@ EXT4="/dev/mapper/cryptroot"
 pvcreate $EXT4
 vgcreate vg0 $EXT4
 lvcreate -L 180G -n root vg0
-lvcreate -L 30G -n swap vg0
+lvcreate -L 8G -n swap vg0
 lvcreate -l 100%FREE -n home vg0
 
 # Formatting the LUKS Container as EXT4.
@@ -85,7 +85,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo networkmanager apparmor git python-psutil python-notify2 vim gdm gnome gnome-tweaks flatpak ufw gufw zram-generator ttf-font-awesome ttf-meslo-nerd adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts noto-fonts ttf-dejavu ttf-liberation reflector mlocate man-db chrony bluez bluez-utils fprintd sof-firmware ccid opensc fwupd ccid opensc pcsc-tools cups-pdf cups plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
+pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo networkmanager apparmor git python-psutil python-notify2 vim flatpak ufw gufw zram-generator ttf-font-awesome ttf-meslo-nerd adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts noto-fonts ttf-dejavu ttf-liberation reflector mlocate man-db chrony bluez bluez-utils fprintd sof-firmware ccid opensc fwupd ccid opensc pcsc-tools plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
 
 # Generating /etc/fstab.
 

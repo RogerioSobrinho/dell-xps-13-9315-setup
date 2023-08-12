@@ -23,6 +23,8 @@ setopt HIST_FIND_NO_DUPS
 # removes blank lines from history
 setopt HIST_REDUCE_BLANKS
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=3'
+
 # setup autocompletion
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -33,22 +35,36 @@ bindkey '\e[B' history-search-forward
 setopt prompt_subst
 autoload -U colors && colors
 local resetColor="%{$reset_color%}"
-PS1=""
 PS1="%F{cyan}"'($(basename "$CONDA_DEFAULT_ENV")) '"$resetColor"
 PS1+='%n%{$reset_color%}@$(scutil --get ComputerName):'"$resetColor"
 PS1+=$'\e[38;5;211m$(short_cwd) ';
 PS1+=$'\e[38;5;48m[$(git_repo):$(git_branch)] ';
 PS1+='$resetColor$ ';
 
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#PROMPT='%F{240}%n%F{red}@%F{green}%m:%F{141}%d$ %F{reset}'
 
-export LS_OPTIONS='--color=auto'
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+#export LS_OPTIONS='--color=auto'
 eval "`dircolors`"
 
+#Enable wayland for firefox.
+export MOZ_ENABLE_WAYLAND=1
+#Let QT5 communicate with wayland
+export QT_QPA_PLATFORM=wayland
+
+# Functions
+
+function up {
+ sudo pacman -Syyuu
+ flatpak update
+}
+
 # Alias
-alias ls='exa -la --header --icons'
-alias cat='batcat' # only ubuntu otherwise change to bat
+alias neofetch='neofetch --ascii_colors 3'
+alias ls='exa -l --header --icons'
+alias cat='bat' # only ubuntu otherwise change to bat
 alias history='histdb'
 alias h='histdb'
 alias grep='grep --color=auto'
