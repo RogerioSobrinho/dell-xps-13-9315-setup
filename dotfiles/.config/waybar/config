@@ -1,16 +1,16 @@
-[{
+{
     "id": "bar-top",
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
+    //"width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["wlr/workspaces"],
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
     "modules-center": ["custom/spotify"],
-    "modules-right": ["custom/weather", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2", "clock"],
+    "modules-right": ["tray","custom/weather", "idle_inhibitor", "pulseaudio", "network", "battery", "battery#bat2", "clock"],
     // Modules configuration
-    // "sway/workspaces": {
+    // "wlr/workspaces": {
     //     "disable-scroll": true,
     //     "all-outputs": true,
     //     "warp-on-scroll": false,
@@ -50,10 +50,10 @@
             "unlocked": ""
         }
     },
-    "wlr/mode": {
+    "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
-    "wlr/scratchpad": {
+    "sway/scratchpad": {
         "format": "{icon} {count}",
         "show-empty": false,
         "format-icons": ["", ""],
@@ -148,33 +148,9 @@
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    }
-},
-{
-    "id": "bar-bottom",
-    "layer": "top", // Waybar at top layer
-    "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 30, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
-    "modules-left": ["wlr/taskbar"],
-    "modules-center": [],
-    "modules-right": ["tray"],
-    "tray": {
+     },
+     "tray": {
         "icon-size": 13,
         "spacing": 10
-    },
-    "wlr/taskbar": {
-        "format": "{icon} {name}",
-        "icon-size": 13,
-        "tooltip-format": "{title}",
-        "on-click": "activate",
-        "on-click-right": "close",
-        "rewrite": {
-          "Firefox Web Browser": "Firefox"
-        }
     }
-}]
-
-
+}
