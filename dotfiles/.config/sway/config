@@ -22,7 +22,10 @@ set $term foot
 
 set $lockman exec bash ~/.config/sway/lockman.sh
 
-exec mako
+exec_always mako
+exec nm-applet
+# Font
+# font pango:"FontAwesome" Regular 11 
 
 # Set inner/outer gaps
 #gaps inner 10
@@ -46,17 +49,19 @@ client.unfocused "#2c2c2c" "#2b2b2b" "#888888" "#000000" "#000000"
 #client.urgent           #2f343a #900000 #ffffff #900000   #900000
 #client.placeholder      #000000 #0c0c0c #ffffff #000000   #333845
 #client.background       #ffffff
-#default_border none
-#default_floating_border none
-#font pango:monospace 0
+
+# No titlebars
+default_border none
+default_floating_border normal 0
 #titlebar_padding 1
 #titlebar_border_thickness 0
+for_window [title="^.*"] title_format " "
 
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Wallpapers/wallhaven-d5e2l3.jpg fill
+output * bg ~/Wallpapers/wallhaven-g8p1ol.jpg fill
 #exec swaybg -i $HOME/Wallpapers/wallhaven-nky1ym.png
 
 # GTK themes
@@ -80,7 +85,7 @@ exec gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 #          before-sleep 'swaylock -f -c 000000'
 
 # Gnome Keyring
-exec gnome-keyring-daemon --daemonize --start --components=gpg,pkcs11,secrets,ssh
+exec gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
 
 # Idle settings
 #exec swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
@@ -275,26 +280,25 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-bindsym $mod+Print exec grim -g "$(slurp)"
+
+# take a screenshot (selection)
+bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
+
+# take a screenshot (entire)
+bindsym $mod+Print exec grim -t png ~/screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
+
+# Assigning stuff to Workspaces
+for_window [class="firefox"] move to workspace 1
+for_window [class="(?i)code"] move to workspace 2
+for_window [class="discord"] move to workspace 3
+for_window [class="Spotify"] move to workspace 4
 
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-   
-   # position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    #status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    #colors {
-    #    statusline #ffffff
-    #    background #323232
-    #    inactive_workspace #32323200 #32323200 #5c5c5c
-    #}
-   swaybar_command waybar
+    swaybar_command waybar
 }
 
 include /etc/sway/config.d/*
