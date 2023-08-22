@@ -85,7 +85,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar xorg-xwayland mako foot pavucontrol wofi brightnessctl playerctl slurp grim network-manager-applet gnome-keyring networkmanager apparmor git python-psutil python-notify2 vim flatpak ufw zram-generator ttf-font-awesome ttf-meslo-nerd adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts noto-fonts ttf-dejavu ttf-liberation reflector mlocate man-db chrony bluez bluez-utils sof-firmware ccid opensc fwupd pcsc-tools plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
+pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar xorg-xwayland mako foot pavucontrol wofi brightnessctl playerctl slurp grim greetd network-manager-applet gnome-keyring networkmanager apparmor git python-psutil python-notify2 vim flatpak ufw zram-generator ttf-font-awesome ttf-meslo-nerd adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts noto-fonts ttf-dejavu ttf-liberation reflector mlocate man-db chrony bluez bluez-utils sof-firmware ccid opensc fwupd pcsc-tools plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
 
 # Generating /etc/fstab.
 
@@ -313,6 +313,10 @@ systemctl enable pcscd.service --root=/mnt &>/dev/null
 # Enabling paccache
 
 systemctl enable paccache.timer --root=/mnt &>/dev/null
+
+# Enabling login manager
+
+systemctl enable greetd.service --root=/mnt &>/dev/null
 
 # Enabling Bluetooth Service (This is only to fix the visual glitch with gnome where it gets stuck in the menu at the top right).
 # IF YOU WANT TO USE BLUETOOTH, YOU MUST REMOVE IT FROM THE LIST OF BLACKLISTED KERNEL MODULES IN /mnt/etc/modprobe.d/30_security-misc.conf
