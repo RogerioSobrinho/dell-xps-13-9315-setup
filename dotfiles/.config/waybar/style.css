@@ -1,9 +1,8 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #ffffff;
-    font-weight: 600;
 }
 
 window#waybar {
@@ -76,6 +75,11 @@ button:hover {
     border-bottom: 3px solid #ffffff;
 }
 
+#custom-logo {
+  color: #ffffff;
+  font-size: 20px;
+}
+
 #clock,
 #battery,
 #cpu,
@@ -92,6 +96,7 @@ button:hover {
 #idle_inhibitor,
 #scratchpad,
 #custom-vpn,
+#custom-logo,
 #mpd {
     padding: 0 10px;
 }

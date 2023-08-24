@@ -18,56 +18,26 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-# set $menu d | dmenu | xargs swaymsg exec --
+set $menu wofi --show=drun | xargs swaymsg exec --
 
-set $lockman exec bash ~/.config/sway/lockman.sh
+include /etc/sway/config-vars.d/*
 
-exec_always mako
-exec nm-applet
-# Font
-# font pango:"FontAwesome" Regular 11 
-
-# Set inner/outer gaps
-#gaps inner 10
-#gaps outer 0
-
-# Thin borders:
-#smart_borders on
-#smart_gaps on
-
-# Title format for windows
-#for_window [shell="xdg_shell"] title_format "%title (%app_id)"
-#for_window [shell="x_wayland"] title_format "%class - %title"
-
-# Window borders
-#client.focused          #ffffff #313131 #ffffff #2e9ef4   #ffffff
+# Window
 client.focused "#1e1e1e" "#1e1e1e" "#d4d4d4" "#808080" "#1e1e1e"
-#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-#client.unfocused        #333333 #222222 #888888 #333845   #333845
 client.focused_inactive "#23242a" "#2b2b2b" "#888888" "#000000" "#000000"
 client.unfocused "#2c2c2c" "#2b2b2b" "#888888" "#000000" "#000000"
-#client.urgent           #2f343a #900000 #ffffff #900000   #900000
-#client.placeholder      #000000 #0c0c0c #ffffff #000000   #333845
-#client.background       #ffffff
 
 # No titlebars
 default_border none
 default_floating_border normal 0
-#titlebar_padding 1
-#titlebar_border_thickness 0
 for_window [title="^.*"] title_format " "
 
-
+exec nm-applet
+exec blueman-applet
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/Wallpapers/wallhaven-g8p1ol.jpg fill
-#exec swaybg -i $HOME/Wallpapers/wallhaven-nky1ym.png
-
-# GTK themes
-exec gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
-
-
 #
 # Example configuration:
 #
@@ -79,43 +49,23 @@ exec gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 #
 # Example configuration:
 #
-#exec swayidle -w \
+# exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
 #          before-sleep 'swaylock -f -c 000000'
-
-# Gnome Keyring
-exec gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
-
-# Idle settings
-#exec swayidle -w timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
-
-exec swayidle -w \
-         timeout 60 'swaylock -f -c 000000' \
-         timeout 90 'swaymsg "output * dpms off"' \
-              resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000' \
-         lock 'swaylock -f -c 000000'
-
-for_window [class=".*"] inhibit_idle fullscreen
-for_window [app_id=".*"] inhibit_idle fullscreen
-
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
+
+# GTK themes
+exec gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+
+### Gnome Keyring
+exec gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
+
 ### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
 
 input type:touchpad {
     tap enabled
@@ -126,9 +76,6 @@ input * {
     xkb_layout "us"
     xkb_variant "intl"
 }
-
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
 
 ### Key bindings
 #
@@ -141,7 +88,7 @@ input * {
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+d exec wofi --show=drun
+    bindsym $mod+d exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -156,15 +103,6 @@ input * {
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 #
-# Custom keybindings
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-    bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-    bindsym XF86MonBrightnessUp exec brightnessctl set 5%+    
-    bindsym XF86AudioPlay exec playerctl play-pause
-
 # Moving around:
 #
     # Move your focus around
@@ -240,9 +178,6 @@ input * {
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
-
-    # Lock
-    bindsym $mod+Escape exec $lockman
 #
 # Scratchpad:
 #
@@ -280,25 +215,17 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-
-# take a screenshot (selection)
-bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
-
-# take a screenshot (entire)
-bindsym $mod+Print exec grim -t png ~/screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
-
 # Assigning stuff to Workspaces
 for_window [class="firefox"] move to workspace 1
 for_window [class="(?i)code"] move to workspace 2
 for_window [class="discord"] move to workspace 3
 for_window [class="Spotify"] move to workspace 4
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    swaybar_command waybar
-}
+# take a screenshot (selection)
+bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
+
+# take a screenshot (entire)
+bindsym $mod+Print exec grim -t png ~/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
 
 include /etc/sway/config.d/*
+include ~/.config/sway/config.d/*

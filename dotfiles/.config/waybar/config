@@ -4,7 +4,7 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     "spacing": 4, // Gaps between modules (4px)
-    "modules-left": ["sway/workspaces"],
+    "modules-left": ["custom/logo", "sway/workspaces"],
     "modules-center": ["clock"],
     "modules-right": ["idle_inhibitor", "pulseaudio", "network", "custom/vpn" , "battery"],
     "sway/workspaces": {
@@ -27,6 +27,9 @@
 //        "exec": "/usr/bin/python3 $HOME/.config/waybar/modules/weather.py",
 //        "return-type": "json"
 //    },
+    "custom/logo": {
+      "format": ""
+    },
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -39,11 +42,6 @@
         //"timezone": "America/Sao_Paulo",
         //"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         //"format-alt": "{:%Y-%m-%d}"
-    },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "battery": {
         "states": {
@@ -78,10 +76,10 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{icon} {volume}%      {format_source}",
-        "format-bluetooth": "{icon} {volume}% {format_source}",
-        "format-bluetooth-muted": " {icon}      {format_source}",
-        "format-muted": "      {format_source}",
+        "format": "{icon}  {format_source}",
+        "format-bluetooth": "{icon}   {format_source}",
+        "format-bluetooth-muted": " {icon}   {format_source}",
+        "format-muted": "   {format_source}",
         "format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {
