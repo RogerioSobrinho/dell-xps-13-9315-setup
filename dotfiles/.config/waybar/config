@@ -7,6 +7,27 @@
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "sway/window"],
     "modules-center": ["custom/spotify"],
     "modules-right": ["tray", "cpu", "memory", "temperature","idle_inhibitor", "pulseaudio", "network", "custom/vpn" , "battery", "clock"],
+    "sway/workspaces": {
+		  "all-outputs": true,
+		  "on-click": "activate",
+		  "format": "{icon}",
+		  "format-icons": {
+			  "1": "",
+			  "2": "",
+			  "3": "",
+			  "4": "",
+			  "5": "󰙯",
+        "6": ""
+		  },
+      "persistent_workspaces": {
+			  "1": [],
+			  "2": [],
+			  "3": [],
+			  "4": [],
+			  "5": [],
+        "6": []
+		  }
+	  },
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -63,7 +84,9 @@
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "",
         "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{essid} ({signalStrength}) - {ifname} via {gwaddr} ",
+        "tooltip-format-wifi": " {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n⬆️ {bandwidthUpBits} ⬇️ {bandwidthDownBits}",
+        // "tooltip-format": "{essid} ({signalStrength}) - {ifname} via {gwaddr} ",
+        "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n⬆️ {bandwidthUpBits} ⬇️ {bandwidthDownBits}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
@@ -103,7 +126,8 @@
         "format": "<span style=\"italic\">{}</span>"
     },
     "sway/window": {
-        "max-length": 50
+        "max-length": 50,
+        "height": 20
     },
     "custom/spotify": {
         "exec-if": "pgrep spotify",

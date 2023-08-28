@@ -30,10 +30,33 @@ include /etc/sway/config-vars.d/*
 #client.focused_inactive "#23242a" "#2b2b2b" "#888888" "#000000" "#000000"
 #client.unfocused "#2c2c2c" "#2b2b2b" "#888888" "#000000" "#000000"
 
+
+# class                 border  backgr. text  indicator child_border
+#client.focused          #E5E9F0 #2E3440 #E5E9F0 #E5E9F0 #E5E9F0
+#client.focused_inactive #434C5E #2E3440 #D8DEE9 #434C5E #434C5E
+#client.unfocused        #434C5E #2E3440 #D8DEE9 #434C5E #434C5E
+#client.urgent           #D8DEE9 #2E3440 #3B4252 #D8DEE9 #D8DEE9
+
+
+#
+# gaps
+#
+gaps inner 10
+smart_gaps off
+
+#
+# Titlebars
+#
+font pango:FiraCodeMedium 9
+default_border pixel 3
+default_floating_border none
+hide_edge_borders none
+titlebar_border_thickness 0
+
 # No titlebars
-default_border none
-default_floating_border normal 0
-for_window [title="^.*"] title_format " "
+#default_border none
+#default_floating_border normal 0
+#for_window [title="^.*"] title_format " "
 
 exec nm-applet
 exec blueman-applet
@@ -41,7 +64,8 @@ exec blueman-applet
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg ~/Wallpapers/wallhaven-g8p1ol.jpg fill
-output * bg ~/Wallpapers/qJ4Fi8h.png fill
+#output * bg ~/Wallpapers/qJ4Fi8h.png fill
+output * bg ~/Wallpapers/dlanham-FalseAlarm.jpg fill
 #
 # Example configuration:
 #
@@ -221,9 +245,10 @@ bindsym $mod+r mode "resize"
 
 # Assigning stuff to Workspaces
 for_window [class="firefox"] move to workspace 1
-for_window [class="(?i)code"] move to workspace 2
-for_window [class="discord"] move to workspace 3
+for_window [class="thunar"] move to workspace 2
+for_window [class="(?i)code"] move to workspace 3
 for_window [class="Spotify"] move to workspace 4
+for_window [class="discord"] move to workspace 5
 
 # take a screenshot (selection)
 bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
