@@ -15,6 +15,9 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term foot
+
+set $lock_timeout 33333
+set $screen_timeout 33333
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -23,9 +26,9 @@ set $menu wofi --show=drun | xargs swaymsg exec --
 include /etc/sway/config-vars.d/*
 
 # Window
-client.focused "#1e1e1e" "#1e1e1e" "#d4d4d4" "#808080" "#1e1e1e"
-client.focused_inactive "#23242a" "#2b2b2b" "#888888" "#000000" "#000000"
-client.unfocused "#2c2c2c" "#2b2b2b" "#888888" "#000000" "#000000"
+#client.focused "#1e1e1e" "#1e1e1e" "#d4d4d4" "#808080" "#1e1e1e"
+#client.focused_inactive "#23242a" "#2b2b2b" "#888888" "#000000" "#000000"
+#client.unfocused "#2c2c2c" "#2b2b2b" "#888888" "#000000" "#000000"
 
 # No titlebars
 default_border none
@@ -37,7 +40,8 @@ exec blueman-applet
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Wallpapers/wallhaven-g8p1ol.jpg fill
+#output * bg ~/Wallpapers/wallhaven-g8p1ol.jpg fill
+output * bg ~/Wallpapers/qJ4Fi8h.png fill
 #
 # Example configuration:
 #
@@ -226,6 +230,12 @@ bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/Screenshots/$(date +%Y-%m-%d_
 
 # take a screenshot (entire)
 bindsym $mod+Print exec grim -t png ~/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
+
+# Lock-Session
+bindsym $mod+Shift+Escape exec loginctl lock-session
+
+# Lock-Session lid close
+bindswitch --reload --locked lid:on exec loginctl lock-session
 
 include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*

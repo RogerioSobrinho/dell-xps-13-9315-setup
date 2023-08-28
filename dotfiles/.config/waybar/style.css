@@ -6,7 +6,7 @@
 }
 
 window#waybar {
-    background-color: #000000;
+    background: #2e3440;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -85,6 +85,7 @@ button:hover {
 #cpu,
 #memory,
 #disk,
+#workspaces,
 #temperature,
 #backlight,
 #network,
@@ -93,6 +94,7 @@ button:hover {
 #custom-media,
 #tray,
 #mode,
+#window,
 #idle_inhibitor,
 #scratchpad,
 #custom-vpn,
