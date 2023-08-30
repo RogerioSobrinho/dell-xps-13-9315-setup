@@ -85,7 +85,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar xorg-xwayland mako foot pavucontrol wofi brightnessctl playerctl slurp grim greetd network-manager-applet gnome-keyring networkmanager apparmor git python-psutil python-notify2 vim flatpak ufw zram-generator ttf-font-awesome ttf-meslo-nerd adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts noto-fonts ttf-dejavu ttf-liberation reflector mlocate man-db chrony bluez bluez-utils sof-firmware ccid opensc fwupd pcsc-tools plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
+pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar thunar-archive-plugin thunar-volman xorg-xwayland mako foot pavucontrol wofi brightnessctl playerctl slurp grim greetd network-manager-applet gnome-keyring blueberry networkmanager apparmor git python-psutil python-notify2 vim flatpak ufw ttf-font-awesome ttf-meslo-nerd reflector mlocate man-db chrony bluez bluez-utils sof-firmware ccid opensc fwupd pcsc-tools plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
 
 # Generating /etc/fstab.
 
@@ -167,13 +167,13 @@ session		required	pam_unix.so
 EOF
 
 
-# ZRAM configuration
+# # ZRAM configuration
 
-bash -c 'cat > /mnt/etc/systemd/zram-generator.conf' <<-'EOF'
-[zram0]
-zram-fraction = 1
-zram-size = ram / 2
-EOF
+# bash -c 'cat > /mnt/etc/systemd/zram-generator.conf' <<-'EOF'
+# [zram0]
+# zram-fraction = 1
+# zram-size = ram / 2
+# EOF
 
 # Randomize Mac Address.
 
@@ -266,6 +266,10 @@ arch-chroot /mnt chown -R $username:$username /home/${username}/.config
 # Settings swap
 
 echo "vm.swappiness=1" >> /mnt/etc/sysctl.conf
+
+#  Settings SSD/NVME
+echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
+echo "vm.dirty_background_ratio = 5" >> /etc/sysctl.conf
 
 # Setting user password.
 
