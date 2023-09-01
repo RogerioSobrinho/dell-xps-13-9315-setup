@@ -246,10 +246,24 @@ bindsym $mod+r mode "resize"
 # Assigning stuff to Workspaces
 for_window [class="firefox"] move to workspace 1
 for_window [app_id="thunar"] move to workspace 2
-for_window [class="(?i)code"] move to workspace 3
-for_window [class="Spotify"] move to workspace 4
-for_window [class="discord"] move to workspace 5
+for_window [class="thunderbird"] move to workspace 3
+for_window [class="(?i)code"] move to workspace 4
+for_window [class="Spotify"] move to workspace 5
+for_window [class="discord"] move to workspace 6
 for_window [title="Copying*"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="Pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="Bubble"] floating enable
+for_window [window_role="dialog"] floating enable
+for_window [window_role="Dialog"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="Dialog"] floating enable
+for_window [class="dialog"] floating enable
+for_window [class="Dialog"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_role="About"] floating enable
 
 # take a screenshot (selection)
 bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
