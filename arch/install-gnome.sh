@@ -156,7 +156,7 @@ mount -o nodev,nosuid,noexec $ESP /mnt/boot/efi
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers grub grub-btrfs snapper snap-pac efibootmgr inetutils sudo networkmanager apparmor git python-psutil python-notify2 vim gdm gnome-control-center gnome-terminal gnome-software gnome-software-packagekit-plugin gnome-tweaks nautilus pipewire-alsa pipewire-jack flatpak ufw zram-generator adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts ttf-font-awesome ttf-meslo-nerd reflector mlocate man-db sbctl chrony bluez bluez-utils sof-firmware ccid opensc fwupd pcsc-tools plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
+pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers grub grub-btrfs snapper snap-pac efibootmgr inetutils sudo networkmanager apparmor git python-psutil python-notify2 vim gnome pipewire-alsa pipewire-jack flatpak ufw zram-generator adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts gnu-free-fonts ttf-font-awesome ttf-meslo-nerd reflector mlocate man-db sbctl chrony bluez bluez-utils sof-firmware ccid opensc fwupd pcsc-tools plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
 
 
 # Routing jack2 through PipeWire.
