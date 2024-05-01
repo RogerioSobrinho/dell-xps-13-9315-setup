@@ -23,35 +23,22 @@ set $screen_timeout 33333
 # on the original workspace that the command was run on.
 set $menu wofi --show=drun | xargs swaymsg exec --
 
-include /etc/sway/config-vars.d/*
-
-# Window
-#client.focused "#1e1e1e" "#1e1e1e" "#d4d4d4" "#808080" "#1e1e1e"
-#client.focused_inactive "#23242a" "#2b2b2b" "#888888" "#000000" "#000000"
-#client.unfocused "#2c2c2c" "#2b2b2b" "#888888" "#000000" "#000000"
-
-
-# class                 border  backgr. text  indicator child_border
-#client.focused          #E5E9F0 #2E3440 #E5E9F0 #E5E9F0 #E5E9F0
-#client.focused_inactive #434C5E #2E3440 #D8DEE9 #434C5E #434C5E
-#client.unfocused        #434C5E #2E3440 #D8DEE9 #434C5E #434C5E
-#client.urgent           #D8DEE9 #2E3440 #3B4252 #D8DEE9 #D8DEE9
-
+# include /etc/sway/config-vars.d/*
 
 #
 # gaps
 #
-gaps inner 10
-smart_gaps off
+# gaps inner 10
+# smart_gaps off
 
 #
 # Titlebars
 #
-font pango:FiraCodeMedium 9
-default_border pixel 3
-default_floating_border none
-hide_edge_borders none
-titlebar_border_thickness 0
+# font pango:FiraCodeMedium 9
+# default_border pixel 3
+# default_floating_border none
+# hide_edge_borders none
+# titlebar_border_thickness 0
 
 # No titlebars
 #default_border none
@@ -65,7 +52,7 @@ exec blueman-applet
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg ~/Wallpapers/wallhaven-g8p1ol.jpg fill
 #output * bg ~/Wallpapers/qJ4Fi8h.png fill
-output * bg ~/Wallpapers/dlanham-FalseAlarm.jpg fill
+#output * bg ~/Wallpapers/dlanham-FalseAlarm.jpg fill
 #
 # Example configuration:
 #
@@ -73,37 +60,8 @@ output * bg ~/Wallpapers/dlanham-FalseAlarm.jpg fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-### Idle configuration
-#
-# Example configuration:
-#
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-
-
-# GTK themes
-exec gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
-
 ### Gnome Keyring
-exec gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
-
-### Input configuration
-
-input type:touchpad {
-    tap enabled
-    natural_scroll enabled
-}
-
-input * {
-    xkb_layout "us"
-    xkb_variant "intl"
-}
+# exec gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
 
 ### Key bindings
 #
@@ -242,40 +200,6 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
-
-# Assigning stuff to Workspaces
-for_window [class="firefox"] move to workspace 1
-for_window [app_id="thunar"] move to workspace 2
-for_window [class="thunderbird"] move to workspace 3
-for_window [class="(?i)code"] move to workspace 4
-for_window [class="Spotify"] move to workspace 5
-for_window [class="discord"] move to workspace 6
-for_window [title="Copying*"] floating enable
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="Pop-up"] floating enable
-for_window [window_role="bubble"] floating enable
-for_window [window_role="Bubble"] floating enable
-for_window [window_role="dialog"] floating enable
-for_window [window_role="Dialog"] floating enable
-for_window [window_type="dialog"] floating enable
-for_window [window_type="Dialog"] floating enable
-for_window [class="dialog"] floating enable
-for_window [class="Dialog"] floating enable
-for_window [window_role="task_dialog"] floating enable
-for_window [window_type="menu"] floating enable
-for_window [window_role="About"] floating enable
-
-# take a screenshot (selection)
-bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
-
-# take a screenshot (entire)
-bindsym $mod+Print exec grim -t png ~/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).png
-
-# Lock-Session
-bindsym $mod+Shift+Escape exec loginctl lock-session
-
-# Lock-Session lid close
-bindswitch --reload --locked lid:on exec loginctl lock-session
 
 include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*

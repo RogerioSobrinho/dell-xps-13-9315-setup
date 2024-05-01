@@ -32,7 +32,7 @@ sgdisk -Zo "$DISK" &>/dev/null
 echo "Creating new partition scheme on $DISK."
 parted -s "$DISK" \
     mklabel gpt \
-    mkpart ESP fat32 1MiB 512MiB \
+    mkpart ESP fat32 1MiB 1GiB \
     set 1 esp on \
     mkpart cryptroot 512MiB 100% \
 
@@ -53,17 +53,17 @@ mkfs.fat -F 32 -s 2 $ESP &>/dev/null
 # Creating a LUKS Container for the root partition.
 
 echo "Creating LUKS Container for the root partition."
-cryptsetup --type luks2 --cipher aes-xts-plain64 --hash sha256 --iter-time 2000 --key-size 256 --pbkdf argon2id --use-urandom --verify-passphrase luksFormat $cryptroot
+cryptsetup luksFormat $cryptroot
 echo "Opening the newly created LUKS Container."
-cryptsetup open $cryptroot cryptroot
+cryptsetup luksOpen $cryptroot cryptroot
 EXT4="/dev/mapper/cryptroot"
 
 # Create encrypted partitions - Encrypted Linux (Root + Home) & Swap partitions
 
 pvcreate $EXT4
 vgcreate vg0 $EXT4
-lvcreate -L 180G -n root vg0
-lvcreate -L 8G -n swap vg0
+lvcreate -L 200G -n root vg0
+lvcreate -L 32G -n swap vg0
 lvcreate -l 100%FREE -n home vg0
 
 # Formatting the LUKS Container as EXT4.
@@ -85,7 +85,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap /mnt base base-devel linux intel-ucode linux-firmware linux-headers lvm2 inetutils sudo networkmanager apparmor git python-psutil python-notify2 vim flatpak ttf-font-awesome ttf-meslo-nerd reflector mlocate man-db chrony bluez bluez-utils sof-firmware ccid opensc fwupd pcsc-tools plymouth grc unzip pacman-contrib rsync libvirt zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
+pacstrap -K /mnt base base-devel linux linux-firmware linux-headers sudo lvm2 efibootmgr intel-ucode mesa vim reflector mlocate man-db sof-firmware fwupd pcsc-tools grc unzip pacman-contrib rsync chronyd networkmanager pcsclite ccid pcsc-tools apparmor firewalld flatpak sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar thunar-archive-plugin thunar-volman xorg-xwayland dunst foot wofi pavucontrol brightnessctl playerctl slurp grim greetd network-manager-applet gnome-keyring blueberry git python-psutil python-notify2 bluez bluez-utils polkit lxqt-policykit
 
 # Generating /etc/fstab.
 
@@ -121,6 +121,15 @@ echo "Configuring /etc/mkinitcpio for ZSTD compression and LUKS hook."
 sed -i 's,MODULES=(),MODULES=(ext4),g' /mnt/etc/mkinitcpio.conf
 sed -i 's,block,plymouth block encrypt lvm2 resume ,g' /mnt/etc/mkinitcpio.conf
 
+# Enabling CPU Mitigations
+curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/default/grub.d/40_cpu_mitigations.cfg -o /mnt/etc/grub.d/40_cpu_mitigations.cfg
+
+# Distrusting the CPU
+curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/default/grub.d/40_distrust_cpu.cfg -o /mnt/etc/grub.d/40_distrust_cpu.cfg
+
+# Enabling IOMMU
+curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/default/grub.d/40_enable_iommu.cfg -o /mnt/etc/grub.d/40_enable_iommu.cfg
+
 # Enabling NTS
 
 curl https://raw.githubusercontent.com/GrapheneOS/infrastructure/main/chrony.conf >> /mnt/etc/chrony.conf
@@ -131,17 +140,14 @@ sed -i 's/#write-cache/write-cache/g' /mnt/etc/apparmor/parser.conf
 sed -i 's,#Include /etc/apparmor.d/,Include /etc/apparmor.d/,g' /mnt/etc/apparmor/parser.conf
 
 # Blacklisting kernel modules
-
-curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/modprobe.d/30_security-misc.conf >> /mnt/etc/modprobe.d/30_security-misc.conf
+curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/modprobe.d/30_security-misc.conf -o /mnt/etc/modprobe.d/30_security-misc.conf
 chmod 600 /mnt/etc/modprobe.d/*
 
 # Security kernel settings.
-
-# Security kernel settings.
-curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/sysctl.d/30_security-misc.conf >> /mnt/etc/sysctl.d/30_security-misc.conf
-sed -i 's/kernel.yama.ptrace_scope=2/kernel.yama.ptrace_scope=3/g' /mnt/etc/sysctl.d/30_security-misc.conf
-curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/sysctl.d/30_silent-kernel-printk.conf >> /mnt/etc/sysctl.d/30_silent-kernel-printk.conf
-curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/sysctl.d/30_security-misc_kexec-disable.conf >> /mnt/etc/sysctl.d/30_security-misc_kexec-disable.conf
+curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/usr/lib/sysctl.d/990-security-misc.conf -o /mnt/etc/sysctl.d/990-security-misc.conf
+sed -i 's/kernel.yama.ptrace_scope=2/kernel.yama.ptrace_scope=3/g' /mnt/etc/sysctl.d/990-security-misc.conf
+curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/sysctl.d/30_silent-kernel-printk.conf -o /mnt/etc/sysctl.d/30_silent-kernel-printk.conf
+curl https://raw.githubusercontent.com/Kicksecure/security-misc/master/etc/sysctl.d/30_security-misc_kexec-disable.conf -o /mnt/etc/sysctl.d/30_security-misc_kexec-disable.conf
 chmod 600 /mnt/etc/sysctl.d/*
 
 # Remove nullok from system-auth
@@ -165,15 +171,6 @@ auth		required	pam_unix.so
 account		required	pam_unix.so
 session		required	pam_unix.so
 EOF
-
-
-# # ZRAM configuration
-
-# bash -c 'cat > /mnt/etc/systemd/zram-generator.conf' <<-'EOF'
-# [zram0]
-# zram-fraction = 1
-# zram-size = ram / 2
-# EOF
 
 # Randomize Mac Address.
 
@@ -265,7 +262,7 @@ arch-chroot /mnt chown -R $username:$username /home/${username}/.config
 
 # Settings swap
 
-echo "vm.swappiness=1" >> /mnt/etc/sysctl.conf
+echo "vm.swappiness=10" >> /mnt/etc/sysctl.conf
 
 #  Settings SSD/NVME
 echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
@@ -295,20 +292,10 @@ systemctl enable fstrim.timer --root=/mnt &>/dev/null
 
 systemctl enable NetworkManager --root=/mnt &>/dev/null
 
-# Enabling CUPS.
-
-systemctl enable cups.service --root=/mnt &>/dev/null
-systemctl enable cups-browsed.service --root=/mnt &>/dev/null
-
 # Enabling AppArmor.
 
 echo "Enabling AppArmor."
 systemctl enable apparmor --root=/mnt &>/dev/null
-
-# Enabling ufw.
-
-echo "Enabling ufw."
-systemctl enable ufw.service --root=/mnt &>/dev/null
 
 # Enabling pcscd
 
@@ -317,6 +304,10 @@ systemctl enable pcscd.service --root=/mnt &>/dev/null
 # Enabling paccache
 
 systemctl enable paccache.timer --root=/mnt &>/dev/null
+
+# Enabling Firewalld.
+echo "Enabling Firewalld."
+systemctl enable firewalld --root=/mnt &>/dev/null
 
 # Enabling Bluetooth Service (This is only to fix the visual glitch with gnome where it gets stuck in the menu at the top right).
 # IF YOU WANT TO USE BLUETOOTH, YOU MUST REMOVE IT FROM THE LIST OF BLACKLISTED KERNEL MODULES IN /mnt/etc/modprobe.d/30_security-misc.conf
@@ -333,11 +324,6 @@ systemctl enable reflector.timer --root=/mnt &>/dev/null
 systemctl enable libvirtd.service --root=/mnt &>/dev/null
 systemctl enable virtlogd.service --root=/mnt &>/dev/null
 
-# Enabling systemd-oomd.
-
-echo "Enabling systemd-oomd."
-systemctl enable systemd-oomd --root=/mnt &>/dev/null
-
 # Disabling systemd-timesyncd
 
 systemctl disable systemd-timesyncd --root=/mnt &>/dev/null
@@ -345,12 +331,6 @@ systemctl disable systemd-timesyncd --root=/mnt &>/dev/null
 # Enabling chronyd
 
 systemctl enable chronyd --root=/mnt &>/dev/null
-
-# Setting umask to 077.
-
-sed -i 's/022/077/g' /mnt/etc/profile
-echo "" >> /mnt/etc/bash.bashrc
-echo "umask 077" >> /mnt/etc/bash.bashrc
 
 # Finishing up
 
