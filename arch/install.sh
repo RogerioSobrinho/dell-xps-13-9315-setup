@@ -85,7 +85,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap -K /mnt base base-devel linux linux-firmware linux-headers sudo lvm2 efibootmgr intel-ucode mesa vim reflector mlocate man-db sof-firmware fwupd pcsc-tools grc unzip pacman-contrib rsync chronyd networkmanager pcsclite ccid pcsc-tools apparmor firewalld flatpak sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar thunar-archive-plugin thunar-volman xorg-xwayland dunst foot wofi pavucontrol brightnessctl playerctl slurp grim greetd network-manager-applet gnome-keyring blueberry git python-psutil python-notify2 bluez bluez-utils polkit lxqt-policykit
+pacstrap -K /mnt base base-devel linux linux-firmware linux-headers sudo lvm2 efibootmgr intel-ucode mesa vim reflector mlocate man-db sof-firmware fwupd pcsc-tools grc unzip pacman-contrib rsync chrony networkmanager pcsclite ccid pcsc-tools apparmor firewalld flatpak sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar thunar-archive-plugin thunar-volman xorg-xwayland dunst foot wofi pavucontrol brightnessctl playerctl slurp grim greetd network-manager-applet gnome-keyring blueberry git python-psutil python-notify2 bluez bluez-utils polkit lxqt-policykit
 
 # Generating /etc/fstab.
 
