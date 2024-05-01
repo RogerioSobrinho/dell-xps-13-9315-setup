@@ -32,7 +32,7 @@ sgdisk -Zo "$DISK" &>/dev/null
 echo "Creating new partition scheme on $DISK."
 parted -s "$DISK" \
     mklabel gpt \
-    mkpart ESP fat32 1MiB 1GiB \
+    mkpart ESP fat32 1MiB 512MiB \
     set 1 esp on \
     mkpart cryptroot 512MiB 100% \
 
