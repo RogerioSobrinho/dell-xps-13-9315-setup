@@ -1,3 +1,13 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+PS1='[\u@\h \W]\$ '
 
 #Enable wayland for firefox.
 export MOZ_ENABLE_WAYLAND=1
@@ -6,7 +16,7 @@ export QT_QPA_PLATFORM=wayland
 
 # Functions
 function up {
- sudo pacman -Syyuu --no-confirm
+ sudo pacman -Syyuu --noconfirm
  flatpak update -y
 }
 
@@ -29,3 +39,7 @@ alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 ## get top process eating cpu ##
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+# ASDF
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"

@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term foot
+set $term wezterm
 
 set $lock_timeout 33333
 set $screen_timeout 33333
@@ -25,15 +25,11 @@ set $menu wofi --show=drun | xargs swaymsg exec --
 
 # include /etc/sway/config-vars.d/*
 
-#
 # gaps
-#
-# gaps inner 10
-# smart_gaps off
+ gaps inner 10
+ smart_gaps off
 
-#
 # Titlebars
-#
 # font pango:FiraCodeMedium 9
 # default_border pixel 3
 # default_floating_border none
@@ -41,18 +37,17 @@ set $menu wofi --show=drun | xargs swaymsg exec --
 # titlebar_border_thickness 0
 
 # No titlebars
-#default_border none
-#default_floating_border normal 0
-#for_window [title="^.*"] title_format " "
+default_border none
+default_floating_border normal 0
+for_window [title="^.*"] title_format " "
 
 exec nm-applet
 exec blueman-applet
+exec /usr/bin/dunst
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-#output * bg ~/Wallpapers/wallhaven-g8p1ol.jpg fill
-#output * bg ~/Wallpapers/qJ4Fi8h.png fill
-#output * bg ~/Wallpapers/dlanham-FalseAlarm.jpg fill
+output * bg ~/Pictures/Wallpapers/wallhaven-1pmoy3.jpg fill
 #
 # Example configuration:
 #
@@ -148,10 +143,11 @@ exec blueman-applet
     bindsym $mod+b splith
     bindsym $mod+v splitv
 
+    # customized*
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
-    bindsym $mod+w layout tabbed
-    bindsym $mod+e layout toggle split
+    #bindsym $mod+s layout stacking
+    #bindsym $mod+w layout tabbed
+    #bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen

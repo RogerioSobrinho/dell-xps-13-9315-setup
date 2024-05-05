@@ -1,7 +1,7 @@
 {
     "id": "bar-top",
     "layer": "top", // Waybar at top layer
-    "position": "bottom", // Waybar position (top|bottom|left|right)
+    "position": "top", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     "spacing": 4, // Gaps between modules (4px)
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "sway/window"],
@@ -44,7 +44,7 @@
     },
     "temperature": {
         // "thermal-zone": 2,
-        "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp2_input",
+        "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon5/temp2_input",
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
@@ -111,7 +111,8 @@
     },
     "sway/window": {
         "max-length": 50,
-        "height": 20
+        "height": 20,
+	"on-click": "activate"
     },
     "custom/spotify": {
         "exec-if": "pgrep spotify",

@@ -6,7 +6,7 @@
 }
 
 window#waybar {
-    background: #2e3440;
+    background: #000000;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -44,6 +44,7 @@ button:hover {
     background: inherit;
     box-shadow: inset 0 -3px #ffffff;
 }
+
 
 #workspaces button {
     padding: 0 5px;

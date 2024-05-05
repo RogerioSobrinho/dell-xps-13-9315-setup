@@ -85,7 +85,7 @@ swapon /dev/mapper/vg0-swap
 # Pacstrap (setting up a base sytem onto the new root).
 
 echo "Installing the base system (it may take a while)."
-pacstrap -K /mnt base base-devel linux linux-firmware linux-headers sudo plymouth lvm2 efibootmgr intel-ucode mesa vim reflector mlocate man-db sof-firmware fwupd pcsc-tools grc unzip pacman-contrib rsync chrony networkmanager pcsclite ccid pcsc-tools apparmor firewalld flatpak sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar thunar-archive-plugin thunar-volman xorg-xwayland dunst foot wofi pavucontrol brightnessctl playerctl slurp grim greetd network-manager-applet gnome-keyring blueberry git python-psutil python-notify2 bluez bluez-utils polkit lxqt-policykit
+pacstrap -K /mnt base base-devel linux linux-firmware linux-headers sudo plymouth lvm2 efibootmgr intel-ucode mesa vim reflector mlocate man-db sof-firmware fwupd pcsc-tools grc unzip pacman-contrib rsync chrony networkmanager pcsclite ccid pcsc-tools apparmor firewalld flatpak sway swaybg swayidle swaylock waybar xdg-desktop-portal-wlr thunar thunar-archive-plugin thunar-volman xorg-xwayland dunst wezterm wofi pavucontrol brightnessctl playerctl slurp grim greetd network-manager-applet gnome-keyring blueberry git python-psutil python-notify2 blueman bluez bluez-utils gparted rsync ly qt5-wayland lxappearance qt5ct polkit lxqt-policykit imv fastfetch wireplumber pipewire pipewire-jack pipewire-alsa pipewire-pulse xdg-desktop-portal galculator evince eog wget exa bat btop tree speedtest-cli net-tools waybar wofi firefox chromium bitwarden vlc unzip p7zip libreoffice-fresh thunderbird deluge ntfs-3g neovim python-pip jdk17-openjdk jre17-openjdk docker docker-compose veracrypt ttf-font-awesome ttf-caladea ttf-carlito ttf-dejavu ttf-liberation ttf-linux-libertine-g noto-fonts adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts 
 
 # Generating /etc/fstab.
 
@@ -291,6 +291,10 @@ systemctl enable fstrim.timer --root=/mnt &>/dev/null
 # Enabling NetworkManager.
 
 systemctl enable NetworkManager --root=/mnt &>/dev/null
+
+# Enabling ly
+
+systemctl enable ly.service --root=/mnt &>/dev/null
 
 # Enabling AppArmor.
 
